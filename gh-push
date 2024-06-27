@@ -3,33 +3,34 @@ set -e
 
 echo "Hello gh-push!"
 
+
+# This script is a GitHub CLI command that combines "git add -A", "git commit -m [some text]", and "git push" into a single command.   
 # Snippets to help get started:
 
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
+# Check if the GitHub CLI is installed
+ if ! command -v gh &> /dev/null; then
+   echo "GitHub CLI is required to run this script" >&2
+   exit 1
 
-# Pass arguments through to another command
-# gh issue list "$@" -R cli/cli
+# Check if the user is logged in
+if ! gh auth status; then
+  echo "You must be logged in to use this script" >&2
+  exit 1
+fi
 
-# Using the gh api command to retrieve and format information
-# QUERY='
-#   query($endCursor: String) {
-#     viewer {
-#       repositories(first: 100, after: $endCursor) {
-#         nodes {
-#           nameWithOwner
-#           stargazerCount
-#         }
-#       }
-#     }
-#   }
-# '
-# TEMPLATE='
-#   {{- range $repo := .data.viewer.repositories.nodes -}}
-#     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
-#   {{- end -}}
-# '
-# exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+# Check if the user is in a git repository
+if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+  echo "You must be in a git repository to use this script" >&2
+  exit 1
+fi
+
+# If all this is true, then this is the main logic
+function gh-push() {
+  git add -A
+  git commit -m "$1"
+  git push
+}
+
+# Call the function with the commit message
+gh-push "$@"
+# The "$@" is a special variable that expands to all the arguments passed to the script.
