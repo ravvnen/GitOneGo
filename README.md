@@ -16,7 +16,7 @@ Ensure you have the latest version of Visual Studio Code installed. Also, make s
 
 ### Installation
 
-WIP
+gh extension install ravvnen/gh-push
 
 ### Customizing Commit Messages
 
