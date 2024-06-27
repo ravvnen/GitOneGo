@@ -25,5 +25,4 @@ WIP
 ## Contact
 
 For support or inquiries, please reach out via the GitHub Issues page of this repository.
-
-Project Link: [https://github.com/yourusername/gitonego-extension](https://github.com/yourusername/gitonego-extension)
+My username is : Ravvnen
