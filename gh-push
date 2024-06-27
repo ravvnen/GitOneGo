@@ -8,9 +8,10 @@ echo "Hello gh-push!"
 # Snippets to help get started:
 
 # Check if the GitHub CLI is installed
- if ! command -v gh &> /dev/null; then
+if ! command -v gh &> /dev/null; then
    echo "GitHub CLI is required to run this script" >&2
    exit 1
+fi
 
 # Check if the user is logged in
 if ! gh auth status; then
